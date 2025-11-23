@@ -1,0 +1,64 @@
+<section class="post-listing-form">
+    <h2>➕ Post a New Item for Sale</h2>
+
+    <form id="listingForm">
+        <label for="productTitle">Item Title (e.g., Engineering Calculus Book)</label>
+        <input type="text" id="productTitle" required>
+
+        <label for="productDescription">Detailed Description (Condition, age, pickup spot)</label>
+        <textarea id="productDescription" rows="4" required></textarea>
+
+        <div class="input-group">
+            <label for="productPrice">Price (₱)</label>
+            <input type="number" id="productPrice" min="1" step="any" required>
+        </div>
+
+        <div class="input-group">
+            <label for="productCategory">Category</label>
+            <select id="productCategory" required>
+                <option value="">-- Select Campus Category --</option>
+                <option value="textbooks">Textbooks</option>
+                <option value="electronics">Electronics</option>
+                <option value="dorm">Dorm Essentials</option>
+                <option value="services">Services (Tutorial)</option>
+            </select>
+        </div>
+
+        <label for="productPhotos">Upload Photos (Max 4)</label>
+        <input type="file" id="productPhotos" accept="image/*" multiple required>
+        <div id="imagePreview" class="preview-area">
+            [Image Preview Area]
+        </div>
+
+        <button type="submit" class="btn btn-primary post-btn">Submit Listing</button>
+    </form>
+</section>
+
+<script>
+    // A simple JavaScript snippet to handle the image preview in the browser
+    const photoInput = document.getElementById('productPhotos');
+    const previewArea = document.getElementById('imagePreview');
+
+    photoInput.addEventListener('change', function() {
+        previewArea.innerHTML = ''; // Clear previous previews
+        const files = this.files;
+
+        if (files) {
+            for (let i = 0; i < Math.min(files.length, 4); i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+                    img.style.marginRight = '10px';
+                    previewArea.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+    });
+
+    // NOTE: Submitting this form will require a Backend Server to actually save the data!
+</script>
